@@ -1,6 +1,6 @@
 # Simple Az Blob
 
-A wrapper library around Azure Blob Storage SDK for easy implementation.
+A wrapper library around Azure Blob Storage SDK for simple implementation.
 
 ## Prerequisites
 - IConfiguration
