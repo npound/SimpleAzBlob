@@ -3,8 +3,9 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Title>Simple AzBlob</Title>
     <Description>Wrapper around blob storage SDK to simplify saving and getting blobs.</Description>
-    <Copyright>© 2019Nicholas Pound</Copyright>
+    <Copyright>©201 9Nicholas Pound</Copyright>
     <PackageTags>Azure Blob Storage, Blob,File,Object,Persistance,sSve</PackageTags>
     <PackageProjectUrl>https://github.com/npound/SimpleAzBlob</PackageProjectUrl>
     <RepositoryUrl>https://github.com/npound/SimpleAzBlob</RepositoryUrl>

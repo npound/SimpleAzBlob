@@ -1,4 +1,4 @@
-# Simple Az Blob
+# Simple AzBlob
 
 A wrapper library around Azure Blob Storage SDK for simple implementation.
 
@@ -8,9 +8,9 @@ A wrapper library around Azure Blob Storage SDK for simple implementation.
 - "AzureStorageAccount" key set in app configuration.
 
 ## Setup
-Use the dependancy injection extension to initialize logging
+Use the dependancy injection extension to initialize logging.
 
-ISimpleAzBlobClient
+
 	var configuration = new ConfigurationBuilder()
 					.AddJsonFile("./appSettings.json")
 					.Build();SimpleAzBlobClient
