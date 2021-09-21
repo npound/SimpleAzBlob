@@ -4,8 +4,16 @@
     <TargetFramework>netstandard2.1</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Wrapper around blob storage SDK to simplify saving and getting blobs.</Description>
-    <Copyright>Nicholas Pound @2019</Copyright>
+    <Copyright>© 2019Nicholas Pound</Copyright>
     <PackageTags>Azure Blob Storage, Blob,File,Object,Persistance,sSve</PackageTags>
+    <PackageProjectUrl>https://github.com/npound/SimpleAzBlob</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/npound/SimpleAzBlob</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <Company>Nicholas Pound</Company>
+    <Authors>Nicholas Pound</Authors>
+    <Version>1.0.1</Version>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
