@@ -6,14 +6,14 @@
     <Title>Simple AzBlob</Title>
     <Description>Wrapper around blob storage SDK to simplify saving and getting blobs.</Description>
     <Copyright>©201 9Nicholas Pound</Copyright>
-    <PackageTags>Azure Blob Storage, Blob,File,Object,Persistance,sSve</PackageTags>
+    <PackageTags>Azure Blob Storage, Blob,File,Object,Persistance,Save</PackageTags>
     <PackageProjectUrl>https://github.com/npound/SimpleAzBlob</PackageProjectUrl>
     <RepositoryUrl>https://github.com/npound/SimpleAzBlob</RepositoryUrl>
     <RepositoryType>Git</RepositoryType>
     <Company>Nicholas Pound</Company>
     <Authors>Nicholas Pound</Authors>
-    <Version>1.0.1</Version>
-    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <Version>1.1.0</Version>
+    <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 

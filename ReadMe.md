@@ -17,9 +17,17 @@ Use the dependancy injection extension to initialize logging.
 
 	serviceCollection.AddLogging();
 	serviceCollection.AddSingleton<IConfiguration>(configuration);
-	serviceCollection.AddBlobStorage();
+	serviceCollection.AddSimpleAzBlob();
 
+You can also use generics when using multiple storage accounts. 
+	var configuration = new ConfigurationBuilder()
+					.AddJsonFile("./appSettings.json")
+					.Build();SimpleAzBlobClient
 
+	serviceCollection.AddLogging();
+	serviceCollection.AddSingleton<IConfiguration>(configuration);
+	serviceCollection.AddSimpleAzBlob<StorageAccountTypeA>();
+	serviceCollection.AddSimpleAzBlob<StorageAccountTypeB>();
 
 ## Usage
 When passing a container name, the container will be created if it doesn't exist.
@@ -29,11 +37,15 @@ When passing a container name, the container will be created if it doesn't exist
 	public class FooClass
 	{
 		private readonly ISimpleAzBlobClient simpleAzBlobClient;
+		private readonly ISimpleAzBlobClient<StorageAccountTypeA> simpleAzBlobClientAccountA;
+		private readonly ISimpleAzBlobClient<StorageAccountTypeB> simpleAzBlobClientAccountB;
 		privtae readonly string containerName = "doodleContainer";
 
-		public FooClass(ISimpleAzBlobClient simpleAzBlobClient)
+		public FooClass(ISimpleAzBlobClient simpleAzBlobClient, ISimpleAzBlobClient<StorageAccountTypeA> simpleAzBlobClientAccountA, ISimpleAzBlobClient<StorageAccountTypeB> simpleAzBlobClientAccountB)
 		{
 			this.simpleAzBlobClient = simpleAzBlobClient;
+			this.simpleAzBlobClientAccountA = simpleAzBlobClientAccountA;
+			this.simpleAzBlobClientAccountB = simpleAzBlobClientAccountB;
 		}
 
 		public async Task Test()
