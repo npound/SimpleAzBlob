@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SimpleAzBlob.Interface
 {
-    public interface ISimpleAzBlobClient<LabelType>
+    public interface ISimpleAzBlobClient<AccountType>
     {
 
         /// <summary>

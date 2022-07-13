@@ -19,15 +19,6 @@ Use the dependancy injection extension to initialize logging.
 	serviceCollection.AddSingleton<IConfiguration>(configuration);
 	serviceCollection.AddSimpleAzBlob();
 
-You can also use generics when using multiple storage accounts. 
-	var configuration = new ConfigurationBuilder()
-					.AddJsonFile("./appSettings.json")
-					.Build();SimpleAzBlobClient
-
-	serviceCollection.AddLogging();
-	serviceCollection.AddSingleton<IConfiguration>(configuration);
-	serviceCollection.AddSimpleAzBlob<StorageAccountTypeA>();
-	serviceCollection.AddSimpleAzBlob<StorageAccountTypeB>();
 
 ## Usage
 When passing a container name, the container will be created if it doesn't exist.
@@ -64,3 +55,40 @@ When passing a container name, the container will be created if it doesn't exist
 		}
 	}
 
+## Multiple Account Handling
+You can create generic classes labeled as configurations to pass in DI to facilitate multiple accounts like so.
+
+   public class AzureStorageAccountA
+    {
+    }
+	   public class AzureStorageAccountB
+    {
+    }
+
+	var configuration = new ConfigurationBuilder()
+					.AddJsonFile("./appSettings.json")
+					.Build();SimpleAzBlobClient
+
+	serviceCollection.AddLogging();
+	serviceCollection.AddSingleton<IConfiguration>(configuration);
+	serviceCollection.AddSimpleAzBlob<AzureStorageAccountA>();
+	serviceCollection.AddSimpleAzBlob<AzureStorageAccountB>();
+
+
+And just call it like so.
+
+	public class FooClass
+	{
+		private readonly ISimpleAzBlobClient simpleAzBlobClient;
+		private readonly ISimpleAzBlobClient<AzureStorageAccountA> simpleAzBlobClientAccountA;
+		private readonly ISimpleAzBlobClient<AzureStorageAccountB> simpleAzBlobClientAccountB;
+		privtae readonly string containerName = "doodleContainer";
+
+		public FooClass(ISimpleAzBlobClient simpleAzBlobClient, ISimpleAzBlobClient<AzureStorageAccountA> simpleAzBlobClientAccountA, ISimpleAzBlobClient<AzureStorageAccountB> simpleAzBlobClientAccountB)
+		{
+			this.simpleAzBlobClient = simpleAzBlobClient;
+			this.simpleAzBlobClientAccountA = simpleAzBlobClientAccountA;
+			this.simpleAzBlobClientAccountB = simpleAzBlobClientAccountB;
+		}
+
+	}

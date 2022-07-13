@@ -7,20 +7,19 @@ using System.Threading.Tasks;
 
 namespace SimpleAzBlob.Clients
 {
-    public class SimpleAzBlobContainerManager
+    public class SimpleAzBlobContainerManager<T>
     {
-        private const string AzureStorageAccount = "AzureStorageAccount";
         private readonly IConfiguration configuration;
-        private readonly ILogger<SimpleAzBlobContainerManager> logger;
+        private readonly ILogger<SimpleAzBlobContainerManager<T>> logger;
         private static ConcurrentDictionary<string, BlobContainerClient> BlobContainerClients = new ConcurrentDictionary<string, BlobContainerClient>();
 
-        public SimpleAzBlobContainerManager(IConfiguration configuration, ILogger<SimpleAzBlobContainerManager> logger)
+        public SimpleAzBlobContainerManager(IConfiguration configuration, ILogger<SimpleAzBlobContainerManager<T>> logger)
         {
             this.configuration = configuration;
             this.logger = logger;
         }
 
-        internal string ConnectionString { get => configuration[AzureStorageAccount]; }
+        internal string ConnectionString { get => configuration[typeof(T).Name]; }
 
         internal async Task<BlobContainerClient> GetContainerClient(string containerName)
         {
@@ -41,7 +40,7 @@ namespace SimpleAzBlob.Clients
             {
                 try
                 {
-                    var containerClient = new BlobContainerClient(configuration[AzureStorageAccount], containerName);
+                    var containerClient = new BlobContainerClient(configuration[typeof(T).Name], containerName);
                     BlobContainerClients[containerName] = containerClient;
                     await containerClient.CreateIfNotExistsAsync();
                     return containerClient;

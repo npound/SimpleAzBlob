@@ -6,6 +6,7 @@ using Azure.Storage.Blobs.Specialized;
 using Microsoft.Extensions.Logging;
 using SimpleAzBlob.Clients;
 using SimpleAzBlob.Interface;
+using SimpleAzBlob.Models;
 using SimpleAzBlob.Models.Enums;
 using System;
 using System.Collections.Concurrent;
@@ -19,9 +20,9 @@ namespace S4S.Libraries.Storage.BlobStorage
     public class SimpleAzBlobClient : ISimpleAzBlobClient
     {
         private readonly ILogger<SimpleAzBlobClient> logger;
-        private readonly SimpleAzBlobContainerManager simpleAzBlobContainerManager;
+        private readonly SimpleAzBlobContainerManager<AzureStorageAccount> simpleAzBlobContainerManager;
 
-        public SimpleAzBlobClient(ILogger<SimpleAzBlobClient> logger, SimpleAzBlobContainerManager simpleAzBlobContainerManager)
+        public SimpleAzBlobClient(ILogger<SimpleAzBlobClient> logger, SimpleAzBlobContainerManager<AzureStorageAccount> simpleAzBlobContainerManager)
         {
             this.logger = logger;
             this.simpleAzBlobContainerManager = simpleAzBlobContainerManager;

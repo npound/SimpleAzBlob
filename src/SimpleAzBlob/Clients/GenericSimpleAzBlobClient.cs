@@ -16,12 +16,12 @@ using System.Threading.Tasks;
 
 namespace S4S.Libraries.Storage.BlobStorage
 {
-    public class SimpleAzBlobClient<LabelType> : ISimpleAzBlobClient<LabelType>
+    public class SimpleAzBlobClient<AccountType> : ISimpleAzBlobClient<AccountType>
     {
-        private readonly ILogger<SimpleAzBlobClient<LabelType>> logger;
-        private readonly SimpleAzBlobContainerManager simpleAzBlobContainerManager;
+        private readonly ILogger<SimpleAzBlobClient<AccountType>> logger;
+        private readonly SimpleAzBlobContainerManager<AccountType> simpleAzBlobContainerManager;
 
-        public SimpleAzBlobClient(ILogger<SimpleAzBlobClient<LabelType>> logger, SimpleAzBlobContainerManager simpleAzBlobContainerManager)
+        public SimpleAzBlobClient(ILogger<SimpleAzBlobClient<AccountType>> logger, SimpleAzBlobContainerManager<AccountType> simpleAzBlobContainerManager)
         {
             this.logger = logger;
             this.simpleAzBlobContainerManager = simpleAzBlobContainerManager;
