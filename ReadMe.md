@@ -28,15 +28,11 @@ When passing a container name, the container will be created if it doesn't exist
 	public class FooClass
 	{
 		private readonly ISimpleAzBlobClient simpleAzBlobClient;
-		private readonly ISimpleAzBlobClient<StorageAccountTypeA> simpleAzBlobClientAccountA;
-		private readonly ISimpleAzBlobClient<StorageAccountTypeB> simpleAzBlobClientAccountB;
 		privtae readonly string containerName = "doodleContainer";
 
-		public FooClass(ISimpleAzBlobClient simpleAzBlobClient, ISimpleAzBlobClient<StorageAccountTypeA> simpleAzBlobClientAccountA, ISimpleAzBlobClient<StorageAccountTypeB> simpleAzBlobClientAccountB)
+		public FooClass(ISimpleAzBlobClient simpleAzBlobClient)
 		{
 			this.simpleAzBlobClient = simpleAzBlobClient;
-			this.simpleAzBlobClientAccountA = simpleAzBlobClientAccountA;
-			this.simpleAzBlobClientAccountB = simpleAzBlobClientAccountB;
 		}
 
 		public async Task Test()
@@ -67,28 +63,42 @@ You can create generic classes labeled as configurations to pass in DI to facili
 
 	var configuration = new ConfigurationBuilder()
 					.AddJsonFile("./appSettings.json")
-					.Build();SimpleAzBlobClient
+					.Build();
 
+	var conn = "Connection String";
 	serviceCollection.AddLogging();
 	serviceCollection.AddSingleton<IConfiguration>(configuration);
 	serviceCollection.AddSimpleAzBlob<AzureStorageAccountA>();
-	serviceCollection.AddSimpleAzBlob<AzureStorageAccountB>();
+	serviceCollection.AddSimpleAzBlob<AzureStorageAccountB>(conn);
 
 
 And just call it like so.
 
 	public class FooClass
 	{
-		private readonly ISimpleAzBlobClient simpleAzBlobClient;
 		private readonly ISimpleAzBlobClient<AzureStorageAccountA> simpleAzBlobClientAccountA;
 		private readonly ISimpleAzBlobClient<AzureStorageAccountB> simpleAzBlobClientAccountB;
 		privtae readonly string containerName = "doodleContainer";
 
-		public FooClass(ISimpleAzBlobClient simpleAzBlobClient, ISimpleAzBlobClient<AzureStorageAccountA> simpleAzBlobClientAccountA, ISimpleAzBlobClient<AzureStorageAccountB> simpleAzBlobClientAccountB)
+		public FooClass(ISimpleAzBlobClient<AzureStorageAccountA> simpleAzBlobClientAccountA, ISimpleAzBlobClient<AzureStorageAccountB> simpleAzBlobClientAccountB)
 		{
-			this.simpleAzBlobClient = simpleAzBlobClient;
 			this.simpleAzBlobClientAccountA = simpleAzBlobClientAccountA;
 			this.simpleAzBlobClientAccountB = simpleAzBlobClientAccountB;
+		}
+
+			public async Task Test()
+		{
+			var item = new Foo {
+				foo = "a",
+				bar = "b"
+			}
+			var list = await simpleAzBlobClient.ListBlobsAtPath(containerName);
+
+			//This will save it at root of container
+			await simpleAzBlobClientA.SaveBlob(containerName,"fooBlob", item);
+
+			var sameItem = await simpleAzBlobClientA.GetBlob<Foo>(containerName,"fooBlob");
+			await simpleAzBlobClientN.DeleteBlob(containerName, "fooBlob");
 		}
 
 	}
