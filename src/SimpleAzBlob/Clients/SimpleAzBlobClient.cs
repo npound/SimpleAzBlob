@@ -62,7 +62,13 @@ namespace S4S.Libraries.Storage.BlobStorage
 
                 var blobClient = new BlockBlobClient(simpleAzBlobContainerManager.ConnectionString, containerClient.Name, path);
                 using (var itemSteam = stream)
-                    await blobClient.UploadAsync(itemSteam, new BlobUploadOptions());
+                    await blobClient.UploadAsync(itemSteam, new BlobUploadOptions()
+                    {
+                        HttpHeaders = new BlobHttpHeaders()
+                        {
+                            ContentType = MimeMapping.MimeUtility.GetMimeMapping(path)
+                        }
+                    });
 
             }
             catch (Exception ex)

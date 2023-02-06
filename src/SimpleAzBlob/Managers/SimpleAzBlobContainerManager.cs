@@ -45,7 +45,7 @@ namespace SimpleAzBlob.Clients
             {
                 try
                 {
-                    var containerClient = new BlobContainerClient(configuration[typeof(T).Name], containerName);
+                    var containerClient = new BlobContainerClient(ConnectionString, containerName);
                     BlobContainerClients[containerName] = containerClient;
                     await containerClient.CreateIfNotExistsAsync();
                     return containerClient;
