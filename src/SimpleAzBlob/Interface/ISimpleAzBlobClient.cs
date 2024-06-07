@@ -1,8 +1,4 @@
-﻿
-
-
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -65,7 +61,7 @@ namespace SimpleAzBlob.Interface
         /// </example>
         /// </param>
         /// <returns>List of blob names with path included.</returns>
-        Task<List<string>> ListBlobsAtPath(string containerName, string path);
+        Task<List<string>> ListBlobsAtPath(string containerName, string path = null);
 
         /// <summary>
         /// List all folders at specified path. 

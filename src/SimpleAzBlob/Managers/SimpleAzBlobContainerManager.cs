@@ -24,7 +24,17 @@ namespace SimpleAzBlob.Clients
             this.connectionContainer = connectionContainer;
         }
 
-        internal string ConnectionString { get => connectionContainer.ConnectionString ?? configuration[connectionString]; }
+        public SimpleAzBlobContainerManager(string connectionString, ILogger<SimpleAzBlobContainerManager<T>> logger = null)
+        {
+            this.logger = logger;
+            connectionContainer = new ConnectionContainer<T>
+            {
+                ConnectionString = connectionString
+            };
+        }
+
+
+        internal string ConnectionString { get => connectionContainer?.ConnectionString ?? configuration[connectionString]; }
 
         internal async Task<BlobContainerClient> GetContainerClient(string containerName)
         {
@@ -37,7 +47,8 @@ namespace SimpleAzBlob.Clients
                 }
                 catch (Exception e)
                 {
-                    logger.LogError(e, "Error Occured Retrieving Client for {containerName}." + e.Message);
+                    if (logger != null)
+                        logger.LogError(e, $"Error Occured Retrieving Client for {containerName}." + e.Message);
                     throw e;
                 }
             }
@@ -52,7 +63,8 @@ namespace SimpleAzBlob.Clients
                 }
                 catch (Exception e)
                 {
-                    logger.LogError(e, "Error Occured Creating Container Client for {containerName}." + e.Message);
+                    if (logger != null)
+                        logger.LogError(e, $"Error Occured Creating Container Client for {containerName}." + e.Message);
                     throw e;
                 }
             }

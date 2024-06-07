@@ -15,7 +15,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace S4S.Libraries.Storage.BlobStorage
+namespace SimpleAzBlob.Storage.BlobStorage
 {
     public class SimpleAzBlobClient : ISimpleAzBlobClient
     {
@@ -26,6 +26,12 @@ namespace S4S.Libraries.Storage.BlobStorage
         {
             this.logger = logger;
             this.simpleAzBlobContainerManager = simpleAzBlobContainerManager;
+        }
+
+        public SimpleAzBlobClient(string connectionString, ILogger<SimpleAzBlobClient> logger = null)
+        {
+            this.logger = logger;
+            this.simpleAzBlobContainerManager = new SimpleAzBlobContainerManager<AzureStorageAccount>(connectionString) ;
         }
 
         public async Task SaveBlob(string containerName, string absoluteName, object item)
@@ -73,7 +79,8 @@ namespace S4S.Libraries.Storage.BlobStorage
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Error Uploading Blob {path}. " + ex.Message);
+                if(logger != null)
+                    logger.LogError(ex, $"Error Uploading Blob {path}. " + ex.Message);
                 throw ex;
             }
         }
@@ -134,7 +141,7 @@ namespace S4S.Libraries.Storage.BlobStorage
         }
 
 
-        public async Task<List<string>> ListBlobsAtPath(string containerName, string path)
+        public async Task<List<string>> ListBlobsAtPath(string containerName, string path = null)
         {
             return await ListItemsInSpecifiedFolder(containerName, ContainerItemType.Blob, path);
         }
@@ -145,6 +152,9 @@ namespace S4S.Libraries.Storage.BlobStorage
             var containerClient = await simpleAzBlobContainerManager.GetContainerClient(containerName);
             try
             {
+                if (prefix != null && !prefix.EndsWith("/"))
+                    prefix += "/";
+
                 // Call the listing operation and return pages of the specified size.
                 var resultSegment = containerClient.GetBlobsByHierarchyAsync(prefix: prefix, delimiter: "/")
                     .AsPages();
@@ -169,7 +179,8 @@ namespace S4S.Libraries.Storage.BlobStorage
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, $"Error Getting List of Items in {containerName}/{prefix ?? ""}. " + ex.Message);
+                if (logger != null)
+                    logger.LogError(ex, $"Error Getting List of Items in {containerName}/{prefix ?? ""}. " + ex.Message);
                 throw ex;
             }
 

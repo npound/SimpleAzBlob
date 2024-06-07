@@ -1,12 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using S4S.Libraries.Storage.BlobStorage;
 using SimpleAzBlob.Clients;
 using SimpleAzBlob.Interface;
 using SimpleAzBlob.Models;
-using System;
-using System.Collections.Generic;
+using SimpleAzBlob.Storage.BlobStorage;
 using System.Linq;
-using System.Text;
 
 namespace SimpleAzBlob.Extensions
 {

@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace S4S.Libraries.Storage.BlobStorage
+namespace SimpleAzBlob.Storage.BlobStorage
 {
     public class SimpleAzBlobClient<AccountType> : ISimpleAzBlobClient<AccountType>
     {
